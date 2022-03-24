@@ -61,7 +61,8 @@ def standard_service(
         for file in rebuild_on
     ]
 
-    build_args = dict(extra_flags = ["-f", dockerfile_path], **kwargs)
+    # build_args = dict(extra_flags = ["-f", dockerfile_path], **kwargs)
+    build_args = dict(dockerfile = dockerfile_path, **kwargs)
 
     if live_update:
         build_args["live_update"] = [
@@ -71,7 +72,20 @@ def standard_service(
 
     k8s_yaml(helm(chart_path, values = helm_values))
 
-    kim_build(image_name, build_context, **build_args)
+    docker_build(image_name, build_context, **build_args)
+# docker_build(
+#     'tilt-avatar-api',
+#     context='.',
+#     dockerfile='./deploy/api.dockerfile',
+#     only=['./api/'],
+#     live_update=[
+#         sync('./api/', '/app/api/'),
+#         run(
+#             'pip install -r /app/requirements.txt',
+#             trigger=['./api/requirements.txt']
+#         )
+#     ]
+# )
 
 # MongoDB from standard Helm chart
 helm_remote(

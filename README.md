@@ -52,3 +52,6 @@ links to individual services.
 
 - http://localhost:3000/ - mapped to `client`
 - http://localhost:5000/ - mapped to `server`
+
+## Known issue:
+- Please we've encounterer problem when running npm install with package-lock.json in mern-stack-example/mern/client. Please try to run 'npm i' locally first. If it still failed please switch to node 14.x
